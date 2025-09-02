@@ -3,12 +3,14 @@ import { AssistantCloudAuthTokens } from "./AssistantCloudAuthTokens";
 import { AssistantCloudRuns } from "./AssistantCloudRuns";
 import { AssistantCloudThreads } from "./AssistantCloudThreads";
 import { AssistantCloudFiles } from "./AssistantCloudFiles";
+import { ThreadHistoryAdapter } from "@assistant-ui/react";
 
 export class AssistantCloud {
-  public readonly threads;
   public readonly auth;
+  public readonly threads;
   public readonly runs;
   public readonly files;
+  public __historyAdapter?: ThreadHistoryAdapter;
 
   constructor(config: AssistantCloudConfig) {
     const api = new AssistantCloudAPI(config);

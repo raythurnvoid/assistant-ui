@@ -17,17 +17,18 @@
   "exports": {
     ".": {
       "aui-source": "./src/index.ts",
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./utils": {
       "aui-source": "./src/utils.ts",
-      "types": "./dist/utils.d.ts",
-      "default": "./dist/utils.js"
+      "types": "./src/utils.ts",
+      "default": "./src/utils.ts"
     }
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "files": [
     "dist",
     "src",

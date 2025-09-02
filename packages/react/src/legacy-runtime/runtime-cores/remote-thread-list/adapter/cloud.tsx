@@ -14,6 +14,7 @@ import { useAssistantCloudThreadHistoryAdapter } from "../../../cloud/AssistantC
 import { RuntimeAdapterProvider } from "../../adapters/RuntimeAdapterProvider";
 import { InMemoryThreadListAdapter } from "./in-memory";
 import { CloudFileAttachmentAdapter } from "../../adapters";
+import { ai_chat_Thread } from "../../../../../app_aui_bridge.ts";
 
 type ThreadData = {
   externalId: string | undefined;
@@ -54,13 +55,16 @@ export const useCloudThreadListAdapter = (
         [cloudInstance],
       );
 
-      const adapters = useMemo(
-        () => ({
+      const adapters = useMemo(() => {
+        // Expose on the cloud instance for out-of-band access
+        const cloud = adapterRef.current.cloud ?? autoCloud!;
+        (cloud as any).__historyAdapter = history;
+
+        return {
           history,
           attachments,
-        }),
-        [history, attachments],
-      );
+        };
+      }, [history, attachments]);
 
       return (
         <RuntimeAdapterProvider adapters={adapters}>
@@ -83,6 +87,8 @@ export const useCloudThreadListAdapter = (
           remoteId: t.id,
           title: t.title,
           externalId: t.external_id ?? undefined,
+          metadata: t.metadata,
+          extra_raw: t as ai_chat_Thread,
         })),
       };
     },

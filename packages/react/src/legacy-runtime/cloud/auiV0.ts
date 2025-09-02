@@ -141,7 +141,7 @@ export const auiV0Decode = (
   const message = fromThreadMessageLike(
     {
       id: cloudMessage.id,
-      createdAt: cloudMessage.created_at,
+      createdAt: cloudMessage.created_at as unknown as Date, // The field type of assistant ui is wrong, it's a string not a date
       ...payload,
     },
     cloudMessage.id,

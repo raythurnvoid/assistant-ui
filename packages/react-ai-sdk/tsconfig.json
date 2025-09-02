@@ -1,4 +1,7 @@
 {
-  "extends": "@assistant-ui/x-buildutils/ts/base",
-  "include": ["src"]
+	"extends": "@assistant-ui/x-buildutils/ts/base",
+	"include": [
+		"src",
+		"app_aui_bridge.ts"
+	]
 }

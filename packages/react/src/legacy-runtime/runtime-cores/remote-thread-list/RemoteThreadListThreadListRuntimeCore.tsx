@@ -485,6 +485,7 @@ export class RemoteThreadListThreadListRuntimeCore
     for await (const result of messageStream) {
       const newTitle = result.parts.filter((c) => c.type === "text")[0]?.text;
       const state = this._state.baseValue;
+
       this._state.update({
         ...state,
         threadData: {

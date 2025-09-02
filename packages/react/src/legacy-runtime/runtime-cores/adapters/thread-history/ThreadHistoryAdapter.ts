@@ -23,4 +23,6 @@ export type ThreadHistoryAdapter = {
   withFormat?<TMessage, TStorageFormat>(
     formatAdapter: MessageFormatAdapter<TMessage, TStorageFormat>,
   ): GenericThreadHistoryAdapter<TMessage>;
+
+  _getIdForLocalId?: Record<string, string | Promise<string>>;
 };

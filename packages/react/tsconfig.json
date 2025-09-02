@@ -1,4 +1,12 @@
 {
-  "extends": "@assistant-ui/x-buildutils/ts/base",
-  "include": ["src"]
+	"extends": "@assistant-ui/x-buildutils/ts/base",
+	"compilerOptions": {
+		"types": [
+			"vite/client"
+		]
+	},
+	"include": [
+		"src",
+		"./app_aui_bridge.ts"
+	]
 }

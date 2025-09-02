@@ -15,7 +15,7 @@
   "type": "module",
   "exports": {
     "./*": {
-      "default": "./dist/styles/*"
+      "default": "./src/styles/*"
     }
   },
   "files": [

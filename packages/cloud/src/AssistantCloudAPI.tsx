@@ -7,15 +7,34 @@ import {
 
 export type AssistantCloudConfig =
   | {
+      /**
+       * If `useAssistantUICloud` is `true`, used for the Assistant UI APIs.
+       *
+       * If `useAssistantUICloud` is `false`, used for the stream APIs excluding the chat API.
+       */
       baseUrl: string;
+      /**
+       * If `useAssistantUICloud` is `true`, used to provide a token for the Assistant UI APIs.
+       *
+       * If `useAssistantUICloud` is `false`, used to provide a token for the stream APIs excluding the chat API.
+       */
       authToken: () => Promise<string | null>;
+      /**
+       * If true, use Assistant UI Cloud backend.
+       *
+       * If false, use custom Convex backend.
+       */
+      useAssistantUiCloud?: boolean;
     }
   | {
+      // Used to generate the token for the Assistant UI Cloud backend from the custom Convex backend
       apiKey: string;
       userId: string;
       workspaceId: string;
+      useAssistantUICloud?: true;
     }
   | {
+      // Not used
       baseUrl: string;
       anonymous: true;
     };
@@ -38,9 +57,11 @@ export class AssistantCloudAPI {
   public _auth: AssistantCloudAuthStrategy;
   public _baseUrl;
 
-  constructor(config: AssistantCloudConfig) {
+  constructor(public config: AssistantCloudConfig) {
     if ("authToken" in config) {
-      this._baseUrl = config.baseUrl;
+      if ("baseUrl" in config) {
+        this._baseUrl = config.baseUrl;
+      }
       this._auth = new AssistantCloudJWTAuthStrategy(config.authToken);
     } else if ("apiKey" in config) {
       this._baseUrl = "https://backend.assistant-api.com";
