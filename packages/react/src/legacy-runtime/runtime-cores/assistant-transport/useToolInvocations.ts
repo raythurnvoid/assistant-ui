@@ -170,24 +170,34 @@ export function useToolInvocations({ state, getTools, onResult, setToolStatuses 
 										});
 									}
 								} else {
-									if (!content.argsText.startsWith(lastState.argsText)) {
-										throw new Error(
-											`Tool call argsText can only be appended, not updated: ${content.argsText} does not start with ${lastState.argsText}`,
-										);
-									}
+									const argsIsComplete = isArgsTextComplete(content.argsText);
 
-									const argsTextDelta = content.argsText.slice(lastState.argsText.length);
-									lastState.controller.argsText.append(argsTextDelta);
+									// On streaming we can append but after streaming validators might apply defaults
+									// so we cannot append anymore, we should instead replace
+									if (content.custom_original.state === "input-streaming") {
+										if (!content.argsText.startsWith(lastState.argsText)) {
+											throw new Error(
+												`Tool call argsText can only be appended, not updated: ${content.argsText} does not start with ${lastState.argsText}`,
+											);
+										}
 
-									const shouldClose = isArgsTextComplete(content.argsText);
-									if (shouldClose) {
+										const argsTextDelta = content.argsText.slice(lastState.argsText.length);
+										lastState.controller.argsText.append(argsTextDelta);
+
+										if (argsIsComplete) {
+											lastState.controller.argsText.close();
+										}
+									} else {
+										// Close when args stop streaming
 										lastState.controller.argsText.close();
+
+										// TODO: Should we somehow replace the content of the controller?
 									}
 
 									lastToolStates.current[content.toolCallId] = {
 										argsText: content.argsText,
 										hasResult: lastState.hasResult,
-										argsComplete: shouldClose,
+										argsComplete: argsIsComplete,
 										controller: lastState.controller,
 									};
 								}

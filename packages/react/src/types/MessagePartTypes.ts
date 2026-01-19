@@ -1,82 +1,80 @@
 import { ReadonlyJSONObject } from "assistant-stream/utils";
 import type { ThreadMessage } from "./AssistantTypes";
+import { ToolUIPart } from "ai";
 
 export type TextMessagePart = {
-  readonly type: "text";
-  readonly text: string;
-  readonly parentId?: string;
+	readonly type: "text";
+	readonly text: string;
+	readonly parentId?: string;
 };
 
 export type ReasoningMessagePart = {
-  readonly type: "reasoning";
-  readonly text: string;
-  readonly parentId?: string;
+	readonly type: "reasoning";
+	readonly text: string;
+	readonly parentId?: string;
 };
 
 export type SourceMessagePart = {
-  readonly type: "source";
-  readonly sourceType: "url";
-  readonly id: string;
-  readonly url: string;
-  readonly title?: string;
-  readonly parentId?: string;
+	readonly type: "source";
+	readonly sourceType: "url";
+	readonly id: string;
+	readonly url: string;
+	readonly title?: string;
+	readonly parentId?: string;
 };
 
 export type ImageMessagePart = {
-  readonly type: "image";
-  readonly image: string;
-  readonly filename?: string;
+	readonly type: "image";
+	readonly image: string;
+	readonly filename?: string;
 };
 
 export type FileMessagePart = {
-  readonly type: "file";
-  readonly filename?: string;
-  readonly data: string;
-  readonly mimeType: string;
+	readonly type: "file";
+	readonly filename?: string;
+	readonly data: string;
+	readonly mimeType: string;
 };
 
 export type Unstable_AudioMessagePart = {
-  readonly type: "audio";
-  readonly audio: {
-    readonly data: string;
-    readonly format: "mp3" | "wav";
-  };
+	readonly type: "audio";
+	readonly audio: {
+		readonly data: string;
+		readonly format: "mp3" | "wav";
+	};
 };
 
 export type DataMessagePart<T = any> = {
-  readonly type: "data";
-  readonly name: string;
-  readonly data: T;
+	readonly type: "data";
+	readonly name: string;
+	readonly data: T;
 };
 
-export type ToolCallMessagePart<
-  TArgs = ReadonlyJSONObject,
-  TResult = unknown,
-> = {
-  readonly type: "tool-call";
-  readonly toolCallId: string;
-  readonly toolName: string;
-  readonly args: TArgs;
-  readonly result?: TResult | undefined;
-  readonly isError?: boolean | undefined;
-  readonly argsText: string;
-  readonly artifact?: unknown;
-  readonly interrupt?: { type: "human"; payload: unknown };
-  readonly parentId?: string;
-  readonly messages?: readonly ThreadMessage[];
+export type ToolCallMessagePart<TArgs = ReadonlyJSONObject, TResult = unknown> = {
+	readonly type: "tool-call";
+	readonly toolCallId: string;
+	readonly toolName: string;
+	readonly args: TArgs;
+	readonly result?: TResult | undefined;
+	readonly isError?: boolean | undefined;
+	readonly argsText: string;
+	readonly artifact?: unknown;
+	readonly interrupt?: { type: "human"; payload: unknown };
+	readonly parentId?: string;
+	readonly messages?: readonly ThreadMessage[];
+
+	// Custom fields
+	/** Original message part */
+	readonly custom_original: ToolUIPart;
 };
 
-export type ThreadUserMessagePart =
-  | TextMessagePart
-  | ImageMessagePart
-  | FileMessagePart
-  | Unstable_AudioMessagePart;
+export type ThreadUserMessagePart = TextMessagePart | ImageMessagePart | FileMessagePart | Unstable_AudioMessagePart;
 
 export type ThreadAssistantMessagePart =
-  | TextMessagePart
-  | ReasoningMessagePart
-  | ToolCallMessagePart
-  | SourceMessagePart
-  | FileMessagePart
-  | ImageMessagePart
-  | DataMessagePart;
+	| TextMessagePart
+	| ReasoningMessagePart
+	| ToolCallMessagePart
+	| SourceMessagePart
+	| FileMessagePart
+	| ImageMessagePart
+	| DataMessagePart;
