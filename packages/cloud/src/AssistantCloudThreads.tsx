@@ -65,13 +65,11 @@ export class AssistantCloudThreads {
 					numItems: query?.limit ?? 20,
 					cursor: query?.after ?? null,
 				},
-				// is_archived is not passed from assistant-ui
-				// includeArchived: query?.is_archived ?? false,
-				includeArchived: true,
+				archived: false,
 			});
 
 			return {
-				threads: result.page.threads.map((thread) => app_convex_adapt_convex_to_app_thread(thread)),
+				threads: result.page.map((thread) => app_convex_adapt_convex_to_app_thread(thread)),
 			};
 		}
 	}

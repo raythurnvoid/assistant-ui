@@ -54,7 +54,7 @@ export class AssistantCloudThreadMessages {
       const result = await app_convex.query(
         app_convex_api.ai_chat.thread_messages_list,
         {
-          threadId: threadId as app_convex_Id<"threads">,
+          threadId,
           query,
         },
       );

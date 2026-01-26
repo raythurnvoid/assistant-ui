@@ -10,6 +10,6 @@ export {
 
 export { app_fetch_stream_runs } from "../../../../src/lib/fetch.ts";
 
-export { has_defined_property } from "../../../../src/lib/utils.ts";
+export { has_defined_property } from "../../../../shared/shared-utils.ts";
 
 export { AppAuthProvider } from "../../../../src/components/app-auth.tsx";

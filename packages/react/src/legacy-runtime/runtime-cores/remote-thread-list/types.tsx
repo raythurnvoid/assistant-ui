@@ -2,7 +2,7 @@ import { ComponentType, PropsWithChildren } from "react";
 import { AssistantRuntime } from "../../runtime";
 import { AssistantStream } from "assistant-stream";
 import { ThreadMessage } from "../../../types";
-import { ai_chat_Thread } from "../../../../app_aui_bridge.ts";
+import { ai_chat_AuiThread } from "../../../../app_aui_bridge.ts";
 
 export type RemoteThreadInitializeResponse = {
   remoteId: string;
@@ -14,7 +14,7 @@ export type RemoteThreadMetadata = {
   readonly remoteId: string;
   readonly externalId?: string | undefined;
   readonly title?: string | undefined;
-  readonly extra_raw?: ai_chat_Thread;
+  readonly extra_raw?: ai_chat_AuiThread;
 };
 
 export type RemoteThreadListResponse = {

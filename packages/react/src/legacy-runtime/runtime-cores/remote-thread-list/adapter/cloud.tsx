@@ -14,7 +14,7 @@ import { useAssistantCloudThreadHistoryAdapter } from "../../../cloud/AssistantC
 import { RuntimeAdapterProvider } from "../../adapters/RuntimeAdapterProvider";
 import { InMemoryThreadListAdapter } from "./in-memory";
 import { CloudFileAttachmentAdapter } from "../../adapters";
-import { ai_chat_Thread } from "../../../../../app_aui_bridge.ts";
+import { ai_chat_AuiThread } from "../../../../../app_aui_bridge.ts";
 
 type ThreadData = {
   externalId: string | undefined;
@@ -88,7 +88,7 @@ export const useCloudThreadListAdapter = (
           title: t.title,
           externalId: t.external_id ?? undefined,
           metadata: t.metadata,
-          extra_raw: t as ai_chat_Thread,
+          extra_raw: t as ai_chat_AuiThread,
         })),
       };
     },
